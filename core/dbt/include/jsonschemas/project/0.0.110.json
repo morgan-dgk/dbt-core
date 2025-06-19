@@ -1525,6 +1525,12 @@
     "ProjectSourceConfig": {
       "type": "object",
       "properties": {
+        "+database": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+enabled": {
           "type": [
             "boolean",
@@ -1546,6 +1552,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+schema": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "+tags": {
