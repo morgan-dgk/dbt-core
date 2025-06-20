@@ -77,6 +77,44 @@ class TestSourceEnabledConfigProjectLevel(SourceConfigTests):
         assert "source.test.other_source.test_table" in manifest.sources
 
 
+class TestSourceDatabasePropertyProjectLevel(SourceConfigTests):
+    @pytest.fixture(scope="class")
+    def models(self):
+        return {
+            "schema.yml": basic_source_schema_yml,
+        }
+
+    @pytest.fixture(scope="class")
+    def project_config_update(self):
+        return {
+            "sources": {
+                "test": {
+                    "test_source": {},
+                }
+            }
+        }
+
+    def test_database_source_property_dbt_project(self, project):
+        run_dbt(["parse"])
+        manifest = get_manifest(project.project_root)
+        assert "source.test.test_source.test_table" in manifest.sources
+
+        new_database_config = {
+            "sources": {
+                "test": {
+                    "test_source": {
+                        "+database": "database_b",
+                    },
+                }
+            }
+        }
+        update_config_file(new_database_config, project.project_root, "dbt_project.yml")
+        run_dbt(["parse"])
+        manifest = get_manifest(project.project_root)
+
+        assert manifest.sources["source.test.test_source.test_table"].database == "database_b"
+
+
 # Test enabled config at sources level in yml file
 class TestConfigYamlSourceLevel(SourceConfigTests):
     @pytest.fixture(scope="class")
