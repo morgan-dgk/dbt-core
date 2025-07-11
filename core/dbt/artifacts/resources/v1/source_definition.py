@@ -20,6 +20,8 @@ from dbt_common.exceptions import CompilationError
 class SourceConfig(BaseConfig):
     enabled: bool = True
     event_time: Any = None
+    database: Optional[str] = None
+    schema: Optional[str] = None
     freshness: Optional[FreshnessThreshold] = field(default_factory=FreshnessThreshold)
     loaded_at_field: Optional[str] = None
     loaded_at_query: Optional[str] = None
