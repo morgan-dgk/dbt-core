@@ -103,7 +103,7 @@ class TestSourceDatabasePropertyProjectLevel(SourceConfigTests):
             "sources": {
                 "test": {
                     "test_source": {
-                        "+database": "database_b",
+                        "database": "database_b",
                     },
                 }
             }

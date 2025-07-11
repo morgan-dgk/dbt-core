@@ -157,7 +157,9 @@ class SourcePatcher:
                 f"Calculated a {type(config)} for a source, but expected a SourceConfig"
             )
 
-        default_database = self.root_project.credentials.database
+        default_database = unrendered_config.get("database", None) or self.root_project.credentials.database
+
+        # database from active target < dbt_project.yml < sources.yml
 
         parsed_source = SourceDefinition(
             package_name=target.package_name,
